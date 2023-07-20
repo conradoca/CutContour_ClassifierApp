@@ -11,10 +11,10 @@ import internetdownloadmanager as idm
 
 def pdf_to_images(pdf_file, destinationFile, dpi = 300):
     doc = fitz.open(pdf_file)
-
-    for p in doc:
-        pix = p.get_pixmap(dpi=dpi)
-        pix.save(destinationFile)
+    #Taking only the first page. Ignoring multipages documents.
+    p=doc[0]
+    pix = p.get_pixmap(dpi=dpi)
+    pix.save(destinationFile)
 
 def preprocess(image):
     image = image / 255.0
@@ -97,7 +97,7 @@ image_path = "temp.pdf"
 tempFile = "temp.png"
 
 # Extract the CutContour file
-origURL="https://uploads.documents.cimpress.io/v1/uploads/72bb3580-8a21-4116-8f22-886e944e03c3~100?tenant=prepress-uploads"
+origURL="https://uds.documents.cimpress.io/v3/documents/c8126e2c-4d05-43d3-9321-359f01455971/docref"
 status, resultURL = SpotColorExtractor(origURL)
 if status != "Completed": exit()
 
