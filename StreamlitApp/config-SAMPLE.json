@@ -1,0 +1,8 @@
+{
+    "token": "<API KEY>",
+    "printPrepURL" : "<printPrep URL",
+    "SpotColorExtractorURL" : "<spotColor extractor URL>",
+    "SpotColorsToSeparate" : [
+                             "CutContour"
+                             ]
+}
