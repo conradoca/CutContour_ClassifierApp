@@ -1,0 +1,5 @@
+#Folders to ignore
+__pycache__/
+
+#Files to ignore
+config.json
