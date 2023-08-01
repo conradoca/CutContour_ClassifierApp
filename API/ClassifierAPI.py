@@ -26,6 +26,7 @@ class Item(BaseModel):
     Threshold: Optional[float] = 0.5
 
 async def checkSpotColor(handler_id, artworkURL, threshold = 0.5):
+
     # Loading the Image from URL
     with urlopen(artworkURL) as response:
         image_data = response.read()
@@ -44,15 +45,10 @@ async def checkSpotColor(handler_id, artworkURL, threshold = 0.5):
     outcome = "approved" if predictionValue > threshold else "rejected"
 
     # Create a dictionary to store the response
-    result_dict = {
-        "artworkURL": artworkURL,
-        "threshold": threshold,
-        "predictionValue": predictionValue,
-        "outcome" : outcome
-    }
-
-    results[handler_id] = result_dict
-
+    results[handler_id]["Status"] = "Completed"
+    results[handler_id]["Result"] = {}
+    results[handler_id]["Result"]["PredictedValue"] = predictionValue
+    results[handler_id]["Result"]["Outcome"] = outcome
 
 @app.post("/check_file/")
 async def check_file(requestJSON: Item, background_tasks: BackgroundTasks, request: Request):
@@ -71,23 +67,20 @@ async def check_file(requestJSON: Item, background_tasks: BackgroundTasks, reque
     normalized_url = parsed_url._replace(path='/', query='', fragment='')
     baseURL = normalized_url.geturl()
 
-    # Prepare the response
-    response ={}
-    response["Status"] = "Running"
-    response["ResultName"] = f"{handler_id}"
-    response["ResultURL"] = f"{baseURL}result/{handler_id}"
+    # Prepare the handler_id
+    results[handler_id] = {}
+    results[handler_id]["Status"] = "Running"
+    results[handler_id]["ArtworkURL"] = request_JSON["Url"]
+    results[handler_id]["Threshold"] = request_JSON["Threshold"]
+    results[handler_id]["ResultName"] = f"{handler_id}"
+    results[handler_id]["ResultURL"] = f"{baseURL}result/{handler_id}"
 
-    return JSONResponse(content=response, status_code=201)
+    return JSONResponse(content=results[handler_id], status_code=201)
 
 
 @app.get("/result/{handler_id}")
 async def get_result(handler_id: str):
 
     if handler_id not in results:
-        return {"status": "Running"}
-    result = results[handler_id]
-    # Prepare the response
-    response ={}
-    response["Status"] = "Completed"
-    response["Result"] = result
-    return JSONResponse(content=response, status_code=200)
+        return JSONResponse(content={"status": "NotFound"}, status_code=200)
+    return JSONResponse(content=results[handler_id], status_code=200)

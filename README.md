@@ -58,9 +58,11 @@ curl -X 'POST' \
 
 ```json
 {
-  "Status": "Running",
-  "ResultName": "008bb0de-69f9-43d7-b40a-e72bf18394a1",
-  "ResultURL": "http://127.0.0.1:8000/result/008bb0de-69f9-43d7-b40a-e72bf18394a1"
+    "Status": "Running",
+    "ArtworkURL": "<url>",
+    "Threshold": 0.5,
+    "ResultName": "c6ef99c7-836c-4235-96e0-b471b922a3e7",
+    "ResultURL": "http://127.0.0.1:8000/result/c6ef99c7-836c-4235-96e0-b471b922a3e7"
 }
 ```
 
@@ -80,13 +82,15 @@ curl -X 'GET' \
 
 ```json
 {
-  "Status": "Completed",
-  "Result": {
-    "artworkURL": "<url>",
-    "threshold": 0.5,
-    "predictionValue": 1.5486503457395884e-7,
-    "outcome": "rejected"
-  }
+    "Status": "Completed",
+    "ArtworkURL": "https://uploads.documents.cimpress.io/v1/uploads/51f7cde0-7f5f-4aac-958f-f5d9dde837f2~100?tenant=prepress-uploads",
+    "Threshold": 0.5,
+    "ResultName": "c6ef99c7-836c-4235-96e0-b471b922a3e7",
+    "ResultURL": "http://127.0.0.1:8000/result/c6ef99c7-836c-4235-96e0-b471b922a3e7",
+    "Result": {
+        "PredictedValue": 1.5486473614600982e-07,
+        "Outcome": "rejected"
+    }
 }
 ```
 
