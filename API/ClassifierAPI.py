@@ -51,7 +51,6 @@ async def checkSpotColor(handler_id, artworkURL, threshold = 0.5):
         "outcome" : outcome
     }
 
-
     results[handler_id] = result_dict
 
 
