@@ -39,6 +39,16 @@ You can access a swagger via ```http://<host>:8000/docs```
   "Threshold": 0.5
 }
 ```
+```cmd
+curl -X 'POST' \
+  'http://127.0.0.1:8000/check_file/' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "Url": "<url>",
+  "Threshold": 0.5
+}'
+```
 
 `Url` is an url to download a png file
 
