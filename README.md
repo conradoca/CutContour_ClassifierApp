@@ -12,6 +12,20 @@ This is presented in two flavours:
 
 # REST API app
 
+## Config file
+For the classifier to run we have to variables:
+- image size: during the image preprocess process all the images are resized to the same dimensions so the classifier can run. These values must be aligned with the values used when the algorithm was trained
+- model: this file has the training weights that are used by the classifier
+
+These variables are stored in the ```config.json``` file, which has this format:
+
+```json
+{
+    "target_size": [500, 500],
+    "model" : "CutContour_val_loss 20230702-2 Sigmoid.hdf5"
+}
+```
+
 ## Start
 ```cmd
 uvicorn ClassifierAPI:app
