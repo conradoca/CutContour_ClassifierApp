@@ -13,12 +13,19 @@ from io import BytesIO
 from PIL import Image, ImageOps
 import tensorflow as tf
 import numpy as np
+import json
+
+# Load config file
+configFile = "config.json"
+with open(configFile, "r") as config:
+    config = json.load(config)
+
+target_size = tuple(config['target_size'])  # Target size for resizing the images.
+modelFile = config["model"]  # Weights file used by tensorflow 
 
 app = FastAPI()
 
 results = {}
-target_size = (500, 500)  # Target size for resizing the images.
-modelFile = "CutContour_val_loss 20230702-2 Sigmoid.hdf5"
 model = tf.keras.models.load_model(modelFile)
 
 class Item(BaseModel):
